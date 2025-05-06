@@ -1,17 +1,15 @@
 <template>
   <AppHeader />
-  <ChatWindow />
+  <router-view />
 </template>
 
 <script>
 import AppHeader from './components/AppHeader.vue'
-import ChatWindow from './components/ChatWindow.vue'
 
 export default {
   name: 'App',
   components: {
-    AppHeader,
-    ChatWindow
+    AppHeader
   }
 }
 </script>

@@ -9,7 +9,7 @@
     <div class="input-container" :style="{ bottom: showTitle ? '200px' : '0px' }">
       <h1 v-if="showTitle" class="gradient-text">Kako Vam mogu pomoći?</h1>
       <input type="file" ref="fileInput" @change="handleFileChange" style="display: none" accept="application/pdf" />
-      <button @click="triggerFileInput" style="border: none; background: none;">
+      <button @click="triggerFileInput" style="border: none; background: none;" v-if="isAdmin">
         <img title="Prenesite dokument" src="https://getdrawings.com/free-icon/upload-icon-png-74.png" alt="Prijenos dokumenata" style="width: 40px; height: 40px;" />
       </button>      
     <textarea v-model="input" placeholder="Postavite pitanje..." class="input-field" rows="4"></textarea>
@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import { jwtDecode } from 'jwt-decode';
+
 export default {
   name: 'ChatWindow',
   data() {
@@ -31,6 +33,13 @@ export default {
       messages: [],
       showTitle: true
     };
+  },
+  computed: {
+    isAdmin() {
+      const token = localStorage.getItem('access_token');
+      const decoded_token = jwtDecode(token);
+      return decoded_token && decoded_token.role === 'admin';
+    }
   },
   methods: {
     scrollToBottom() {
@@ -68,10 +77,11 @@ export default {
 
     async fetchAnswer(question) {
       try {
-        const response = await fetch('http://127.0.0.1:8000/ask', {
+        const response = await fetch(process.env.VUE_APP_API_BASE_URL + "ask", {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
           },
           body: JSON.stringify({ question })
         });
@@ -108,11 +118,14 @@ export default {
 
         const response = await fetch('http://127.0.0.1:8000/upload-pdf', {
           method: 'POST',
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+          },
           body: formData
         });
 
         if(!response.ok) {
-          throw new Error('Greška prilikom učitavanja PDF-a.');
+          alert('Greška prilikom učitavanja PDF-a.');
         }
 
         const data = await response.json();

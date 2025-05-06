@@ -4,6 +4,9 @@
             <img src="https://images.seeklogo.com/logo-png/59/1/ollama-logo-png_seeklogo-593420.png" alt="ollama-logo">
             <h1>Lokalni LLM</h1>
         </a>
+        <a href="" v-if="isLoggedIn">
+            <button class="logout-button" @click="logOut">Odjava</button>
+        </a>
     </header>
     <div class="header-div"></div>
 </template>
@@ -11,6 +14,17 @@
 <script>
 export default {
   name: 'AppHeader',
+  computed: {
+    isLoggedIn() {
+      return localStorage.getItem('access_token') !== null;
+    }
+  },
+  methods: {
+    logOut() {
+      localStorage.removeItem('access_token');
+      window.location.href = '/login';
+    }
+  }
 }
 </script>
 
@@ -22,8 +36,9 @@ export default {
     position: fixed;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    padding-left: 50px;
+    justify-content: space-between;
+    padding-left: 40px;
+    padding-right: 40px;
     width: 100%;
     height: 10vh;
     background: #de9535;
@@ -43,5 +58,12 @@ img {
     height: 40px;
     width: 40px;
     border-radius: 100%;
+}
+
+.logout-button {
+    background: #282626;
+    color: #de9535;
+    padding: 10px;
+    width: 100px;
 }
 </style>
