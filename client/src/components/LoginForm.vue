@@ -111,4 +111,24 @@ input {
     background: #3b3b3b;
     color: white;
 }
+
+@media (max-width: 750px) {
+    input {
+        max-width: 400px;
+    }
+
+    button {
+        width: 50%;
+    }
+}
+
+@media (max-width: 450px) {
+    input {
+        max-width: 300px;
+    }
+
+    button {
+        width: 100%;
+    }
+}
 </style>

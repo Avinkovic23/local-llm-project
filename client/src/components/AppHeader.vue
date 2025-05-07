@@ -2,7 +2,7 @@
     <header class="header">
         <a href="/">
             <img src="https://images.seeklogo.com/logo-png/59/1/ollama-logo-png_seeklogo-593420.png" alt="ollama-logo">
-            <h1>Lokalni LLM</h1>
+            <h1 class="header-title">Lokalni LLM</h1>
         </a>
         <a href="" v-if="isLoggedIn">
             <button class="logout-button" @click="logOut">Odjava</button>
@@ -65,5 +65,11 @@ img {
     color: #de9535;
     padding: 10px;
     width: 100px;
+}
+
+@media (max-width: 450px) {
+  .header-title {
+    visibility: hidden  ;
+  }
 }
 </style>

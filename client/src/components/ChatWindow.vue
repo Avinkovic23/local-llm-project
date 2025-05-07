@@ -7,7 +7,7 @@
       <div ref="scrollTarget"></div>
     </div>
     <div class="input-container" :style="{ bottom: showTitle ? '200px' : '0px' }">
-      <h1 v-if="showTitle" class="gradient-text">Kako Vam mogu pomoći?</h1>
+      <h1 v-if="showTitle" class="gradient-text chat-title">Kako Vam mogu pomoći?</h1>
       <input type="file" ref="fileInput" @change="handleFileChange" style="display: none" accept="application/pdf" />
       <button @click="triggerFileInput" style="border: none; background: none;" v-if="isAdmin">
         <img title="Prenesite dokument" src="https://getdrawings.com/free-icon/upload-icon-png-74.png" alt="Prijenos dokumenata" style="width: 40px; height: 40px;" />
@@ -256,4 +256,17 @@ button:disabled {
   }
 }
 
+@media (max-width: 750px) {
+  .messages-container {
+    width: 90%;
+  }
+
+  .input-field {
+    width: 90%;
+  }
+
+  button {
+    width: 60%;
+  }
+}
 </style>
